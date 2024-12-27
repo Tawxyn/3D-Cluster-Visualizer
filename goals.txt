@@ -1,0 +1,21 @@
+Primary Goals
+    1. Use python to generate a set of 3D coordinates (x,y,z)
+    2. Ensure the points are distriubuted within a definined space / limits
+
+Visualize 3D points
+    1. Create a basic 3D scatter plot using Matplotlib
+    2. Display points with default formatting to verify generation  
+
+Cluster points
+    1. Impliment clustering algorithm 
+    2. Assign each point to a cluster and calcualte cluster center
+
+Display Cluster 
+    1. Update 3D scatter plot to show points with colors based on cluster
+       assignment.
+    2. Add markers for cluster centers (e.g., larger or differently shaped
+       points).
+
+Make the Code Modular
+    1. Divide the project into functions or modules for tasks like generating
+       points, clustering, and visualization.
