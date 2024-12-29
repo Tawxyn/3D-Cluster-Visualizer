@@ -1,9 +1,10 @@
 Primary Goals
-    1. Use python to generate a set of 3D coordinates (x,y,z)
+    1. Use python to generate a set of 3D coordinate blobs centered around means (x,y,z)
     2. Ensure the points are distriubuted within a definined space / limits
-    3. Parse the data into a CSV file
-    4. Unparse the data from a CSV
-    5. Apply K-means algo to the data to clusterize data
+    3. Create clusters based on normal distriubution on a predefined amount of clusters
+    4. Parse the data into a CSV file
+    5. Unparse the data from a CSV
+    6. Apply K-means algo to the data to clusterize data
 
 Visualize 3D points
     1. Create a basic 3D scatter plot using Plotly
