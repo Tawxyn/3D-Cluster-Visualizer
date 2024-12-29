@@ -3,6 +3,15 @@ import csv
 import pandas as pd
 import numpy as np
 
+user_input = int(input("Enter the amount of clusters you would like to simulate the generation and k-means algorithm: "))
+
+# Self impliment KMeans algo. class
+class Kmeans:
+
+    def __init__(self, n_clusters=user_input, max_iter=300):
+        self.n_clusters = n_cluster
+        self.max_iter = max_iter
+
 def generate_blobs(cluster_amount):
     cluster_center = []
     cluster_center_mean = []
@@ -36,16 +45,7 @@ def generate_blobs(cluster_amount):
     
     for points in gaussian_distribution:
         print(points)
-
-
-    # Set data_set sub_array into dataframe
-    #df = pd.DataFrame(cluster_centers)
-
-    # Write Dataframe to CSV File   
-    #print(df)
-    # Convert datafrake to CSV
-    #df.to_csv("output.csv", index=False)
-
-
-user_input = int(input("Enter the amount of clusters you would like to simulate the generation and k-means algorithm: "))
+    
+# Run function
 generate_blobs(user_input)
+
