@@ -5,16 +5,6 @@ import numpy as np
 
 user_input = int(input("Enter the amount of clusters you would like to simulate the generation and k-means algorithm: "))
 
-# Helper function to calculate distances from a point to data
-def euclidean(point, data):
-    return np.sqrt(np.sum((point - data)**2, axis=1))
-# Self impliment KMeans algo. class
-class Kmeans:
-
-    def __init__(self, n_clusters=user_input, max_iter=300):
-        self.n_clusters = n_cluster
-        self.max_iter = max_iter
-
 def generate_blobs(cluster_amount):
     cluster_center = []
     cluster_center_mean = []
@@ -41,14 +31,30 @@ def generate_blobs(cluster_amount):
 
     gaussian_distribution = []
 
+    # Loop through cluster and normalize points based on gaussian dist.
     for i in range(len(cluster_center)):
 
-        points = np.random.normal(loc=cluster_center[i], scale=cluster_center_mean[i], size=(total_data_points, cluster_amount))
-        gaussian_distribution.append(points)
+        # Set cluster location, scale baed on std. dev., and dimensions which is hardcoded as 3D
+        points = np.random.normal(loc=cluster_center[i], 
+                                  scale=cluster_center_mean[i], 
+                                  size=(total_data_points, 3)
+        )
+
+        #Append cluster index to each point
+        labeled_points = np.hstack([points, np.full((total_data_points, 1), i)])
+        gaussian_distribution.append(labeled_points)
     
-    for points in gaussian_distribution:
-        print(points)
+    # Flatten the list of arrays into one signle 2D Array
+    flat_data = np.vstack(gaussian_distribution)
+
+    # Set new 2d array into data frame with correct column headers
+    df = pd.DataFrame(flat_data, columns=['x', 'y', 'z', 'cluster'])
+    print(df)
     
+    # Save data frame to csv file
+    df.to_csv("output.csv", index=False)
+
+
 # Run function
 generate_blobs(user_input)
 
