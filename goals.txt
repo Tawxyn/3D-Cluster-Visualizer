@@ -1,9 +1,12 @@
 Primary Goals
     1. Use python to generate a set of 3D coordinates (x,y,z)
     2. Ensure the points are distriubuted within a definined space / limits
+    3. Parse the data into a CSV file
+    4. Unparse the data from a CSV
+    5. Apply K-means algo to the data to clusterize data
 
 Visualize 3D points
-    1. Create a basic 3D scatter plot using Matplotlib
+    1. Create a basic 3D scatter plot using Plotly
     2. Display points with default formatting to verify generation  
 
 Cluster points
