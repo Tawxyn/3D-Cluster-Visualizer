@@ -5,6 +5,9 @@ import numpy as np
 
 user_input = int(input("Enter the amount of clusters you would like to simulate the generation and k-means algorithm: "))
 
+# Helper function to calculate distances from a point to data
+def euclidean(point, data):
+    return np.sqrt(np.sum((point - data)**2, axis=1))
 # Self impliment KMeans algo. class
 class Kmeans:
 
@@ -24,7 +27,7 @@ def generate_blobs(cluster_amount):
     except ValueError:
         print("Please enter a valid whole number for the lower / upper limits.")
 
-    # For loop to generate random variables     from lower and upper limit
+    # For loop to generate random variables from lower and upper limit
     for i in range(0, cluster_amount):
 
         x = random.uniform(float(lower_limit), float(upper_limit))
