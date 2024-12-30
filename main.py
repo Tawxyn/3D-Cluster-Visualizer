@@ -54,7 +54,30 @@ def generate_blobs(cluster_amount):
     # Save data frame to csv file
     df.to_csv("output.csv", index=False)
 
-
 # Run function
 generate_blobs(user_input)
+
+# Read csv file and pull data frame
+data = pd.read_csv("output.csv")
+
+# Filter out cluster identifier 
+data = data.drop('cluster', axis=1)
+print(data)
+
+# Centroid creation
+def random_centroids(data, user_input):
+    centroids = []
+    for i in range(user_input):
+        # Grab a sample row of values and turn into float value from list of data from data frame 
+        centroid = data.apply(lambda x: float(x.sample()))
+        centroids.append(centroid)
+    return pd.concat(centroids, axis=1)
+
+centroids = random_centroids(data, user_input)
+print(centroids) 
+# Distance formula
+#np.sqrt((data - centroids.iloc[:,0] ** 2).sum(axis=1)))
+
+
+
 
