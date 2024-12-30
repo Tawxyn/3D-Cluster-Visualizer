@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 from IPython.display import clear_output
 from mpl_toolkits.mplot3d import Axes3D
 
-user_input = int(input("Enter the amount of clusters you would like to simulate the generation and k-means algorithm: "))
-
 def generate_blobs(cluster_amount):
     cluster_center = []
     cluster_center_mean = []
@@ -56,15 +54,8 @@ def generate_blobs(cluster_amount):
     
     # Save data frame to csv file
     df.to_csv("output.csv", index=False)
-
-# Run function
-generate_blobs(user_input)
-
-# Read csv file and pull data frame
-data = pd.read_csv("output.csv")
-
-# Filter out cluster identifier 
-data = data.drop('cluster', axis=1)
+    
+    return df
 
 # Centroid creation
 def random_centroids(data, user_input):
@@ -75,24 +66,18 @@ def random_centroids(data, user_input):
         centroids.append(centroid)
     return pd.concat(centroids, axis=1)
 
-centroids = random_centroids(data, user_input)
-print(centroids)
-
 # Distance formula / cluster assignment 
 def get_labels(data, centroids):
     distances = centroids.apply(lambda x: np.sqrt(((data - x) ** 2).sum(axis=1)))
     print(distances)
     return distances.idxmin(axis=1)
 
-labels = get_labels(data, centroids)
-print(labels.value_counts())
-
 # Create new centroids by group
-def new_centroids(data, labels, user_input):
+def new_centroids(data, labels):
     return data.groupby(labels).mean().T
 
 # Plot clusters
-def plot_clusters_3d(data, labels, centroids, interation): 
+def plot_clusters_3d(data, labels, centroids, iteration): 
     
     # Create figure for plot and add 3D subplot
     fig = plt.figure()
@@ -127,16 +112,30 @@ def plot_clusters_3d(data, labels, centroids, interation):
     plt.draw()  
     plt.pause(0.5)  
 
-max_iterations = 100
-centroids = random_centroids(data, user_input)
-old_centroids = pd.DataFrame()
-iteration = 1
+# Main function to execute clustering
+def main():
+    user_input = int(input("Enter the number of clusters: "))
+    data = generate_blobs(user_input)
+    if data is None:
+        return
 
-while iteration < max_iterations and not centroids.equals(old_centroids):
-    old_centroids = centroids
+    # Remove cluster label for K-Means algorithm
+    data = data.drop('cluster', axis=1)
+    
+    max_iterations = 100
+    centroids = random_centroids(data, user_input)
+    old_centroids = pd.DataFrame()
+    iteration = 1
 
-    labels = get_labels(data, centroids)
-    centroids = new_centroids(data, labels, user_input)
-    plot_clusters_3d(data, labels, centroids, iteration)
-    iteration += 1
+    while iteration < max_iterations and not centroids.equals(old_centroids):
+        old_centroids = centroids
+
+        labels = get_labels(data, centroids)
+        centroids = new_centroids(data, labels)
+        plot_clusters_3d(data, labels, centroids, iteration)
+        iteration += 1
+
+# Run the main function
+if __name__ == '__main__':
+    main()
 

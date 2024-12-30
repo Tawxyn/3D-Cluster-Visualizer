@@ -24,4 +24,4 @@ pip install ipython
 ```
 
 ## Credit:
-The project scope increased and was inspired to add a built from scratch K-Means clustering algorithm from the YouTube channel Dataquest.
+The project scope increased, and I was inspired to add a built-from-scratch K-Means clustering algorithm, thanks to the YouTube channel Dataquest. Please check them out for an in-depth and well-explained breakdown of how the K-Means algorithm works.
