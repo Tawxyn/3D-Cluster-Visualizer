@@ -2,9 +2,9 @@ import random
 import csv
 import pandas as pd
 import numpy as np
-from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 from IPython.display import clear_output
+from mpl_toolkits.mplot3d import Axes3D
 
 user_input = int(input("Enter the amount of clusters you would like to simulate the generation and k-means algorithm: "))
 
@@ -89,10 +89,54 @@ print(labels.value_counts())
 
 # Create new centroids by group
 def new_centroids(data, labels, user_input):
-    return data.groupby(labels).apply(lambda x: np.exp(np.log(x).mean())).T
+    return data.groupby(labels).mean().T
 
-# plot clusters
-def plot_clusters(data, labels, centroids, interation): 
-    print()
+# Plot clusters
+def plot_clusters_3d(data, labels, centroids, interation): 
+    
+    # Create figure for plot and add 3D subplot
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.set_title(f'Iteration {iteration}')
+
+    # Plot data points
+    ax.scatter(
+        data.iloc[:, 0], # x-cords
+        data.iloc[:, 1], # y-cords
+        data.iloc[:, 2], # z-cords
+        c = labels,
+        cmap = 'viridis',
+        s = 10
+    )
+    # Plot centroids
+    ax.scatter(
+        centroids.iloc[0, :], # x-cords
+        centroids.iloc[1, :], # y-cords
+        centroids.iloc[2, :], # z-cords
+        c = 'red',
+        cmap = 'viridis',
+        s = 50
+    )
+    # Set labels of axis
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+
+    # Clear the output from previous iteration and pause to allow update
+    clear_output(wait=True)
+    plt.draw()  
+    plt.pause(0.5)  
 
 max_iterations = 100
+centroids = random_centroids(data, user_input)
+old_centroids = pd.DataFrame()
+iteration = 1
+
+while iteration < max_iterations and not centroids.equals(old_centroids):
+    old_centroids = centroids
+
+    labels = get_labels(data, centroids)
+    centroids = new_centroids(data, labels, user_input)
+    plot_clusters_3d(data, labels, centroids, iteration)
+    iteration += 1
+
