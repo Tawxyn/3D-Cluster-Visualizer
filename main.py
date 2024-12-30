@@ -2,6 +2,9 @@ import random
 import csv
 import pandas as pd
 import numpy as np
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+from IPython.display import clear_output
 
 user_input = int(input("Enter the amount of clusters you would like to simulate the generation and k-means algorithm: "))
 
@@ -62,22 +65,34 @@ data = pd.read_csv("output.csv")
 
 # Filter out cluster identifier 
 data = data.drop('cluster', axis=1)
-print(data)
 
 # Centroid creation
 def random_centroids(data, user_input):
     centroids = []
     for i in range(user_input):
         # Grab a sample row of values and turn into float value from list of data from data frame 
-        centroid = data.apply(lambda x: float(x.sample()))
+        centroid = data.apply(lambda x: float(x.sample().iloc[0]))
         centroids.append(centroid)
     return pd.concat(centroids, axis=1)
 
 centroids = random_centroids(data, user_input)
-print(centroids) 
-# Distance formula
-#np.sqrt((data - centroids.iloc[:,0] ** 2).sum(axis=1)))
+print(centroids)
 
+# Distance formula / cluster assignment 
+def get_labels(data, centroids):
+    distances = centroids.apply(lambda x: np.sqrt(((data - x) ** 2).sum(axis=1)))
+    print(distances)
+    return distances.idxmin(axis=1)
 
+labels = get_labels(data, centroids)
+print(labels.value_counts())
 
+# Create new centroids by group
+def new_centroids(data, labels, user_input):
+    return data.groupby(labels).apply(lambda x: np.exp(np.log(x).mean())).T
 
+# plot clusters
+def plot_clusters(data, labels, centroids, interation): 
+    print()
+
+max_iterations = 100
