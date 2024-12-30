@@ -7,7 +7,7 @@ Primary Goals
     6. Apply K-means algo to the data to clusterize data
 
 Visualize 3D points
-    1. Create a basic 3D scatter plot using Plotly
+    1. Create a basic 3D scatter plot using matplotlib might change to plotly
     2. Display points with default formatting to verify generation  
 
 Cluster points
