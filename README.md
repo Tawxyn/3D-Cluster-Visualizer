@@ -11,7 +11,7 @@ A Python-based tool for generating and visualizing 3D clusters using the K-means
 
 ## Installation
 
-Install the necessary dependencies by running the following command:
+Install the necessary dependencies by running the following commands:
 
  
 ```bash
@@ -20,6 +20,10 @@ pip install numpy
 pip install matplotlib
 ```
 
+## Use Cases 
+When using the tool to test cluster amounts and data points per cluster, make sure to use reasonable upper and lower cluster centers. As you increase the lower and 
+upper limits of clustering from centers of eachother the faster K-Means is able to determine the clusters.
+
 ## Credit:
 The project scope increased, and I was inspired to add a built-from-scratch K-Means clustering algorithm, thanks to the YouTube channel Dataquest. Please check them out for an in-depth and well-explained breakdown of how the K-Means algorithm works.
 
@@ -27,8 +31,9 @@ The project scope increased, and I was inspired to add a built-from-scratch K-Me
 ## Excerpt:
 This project started as an exploration of Matplotlib, with the goal of creating a simple 3D scatter plot from x, y, and z coordinates. As the project progressed, I added more features, including K-means clustering and customization options. The project grew from a basic plotter into a tool for simulating and visualizing data clusters, improving with each iteration.
 
-# Future Improvenments:
+## Future Improvements:
 - Load data from self submitted CSV file .
 - Possible implimentation of Plotly with dash, mainly due to MatPlotLib not being as visually asthetic. 
 - 2D overview to get a better idea of the K-Means algo. in action with original 3D.
 - Cluster legend, and compare true cluster label to simulated clustering.
+- Allow user to set standard deviation to increase the spread of points.
