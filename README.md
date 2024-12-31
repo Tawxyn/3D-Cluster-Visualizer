@@ -22,9 +22,9 @@ pip install matplotlib
 
 ## Use Cases:
 When using the tool to test cluster amounts and data points per cluster, make sure to use reasonable upper and lower cluster centers. As you increase the lower and 
-upper limits of clustering from centers of eachother the faster K-Means is able to determine the clusters. To get a decent feel of the project try 10 clusters, 100 data points, from 1 - 5. Additionally the current color map is 'hsv' from MatPlotLib, if you wish to change the color, you can set it within the plot_cluster_3d to a more appropriate colormap for yourself.
+upper limits of clustering from centers of each other the faster K-Means is able to determine the clusters. To get a decent feel for the project try 10 clusters, 100 data points, from 1 - 5. Additionally the current color map is 'hsv' from MatPlotLib, if you wish to change the color, you can set it within the plot_cluster_3d to a more appropriate colormap for yourself.
 
-# Example Plot:
+## Example Plot:
 <p align="center">
   <img src="visuals/50Iteration.gif" alt="Cluster Visualization">
 </p>
