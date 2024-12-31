@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Generate cluster centers
 def generate_blobs(cluster_amount):
     cluster_center = []
     cluster_center_mean = []
@@ -87,7 +88,7 @@ def plot_clusters_3d(fig, ax, data, labels, centroids, iteration):
         data.iloc[:, 1], # y-cords
         data.iloc[:, 2], # z-cords
         c = labels,
-        cmap = 'viridis',
+        cmap = 'hsv',
         s = 8,
         alpha = 0.5
     )
@@ -106,7 +107,6 @@ def plot_clusters_3d(fig, ax, data, labels, centroids, iteration):
             
     plt.draw()
     plt.pause(0.5)  
-
 
 
 # Main function to execute clustering
