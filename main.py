@@ -3,8 +3,6 @@ import csv
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from IPython.display import clear_output
-from mpl_toolkits.mplot3d import Axes3D
 
 def generate_blobs(cluster_amount):
     cluster_center = []
@@ -50,7 +48,6 @@ def generate_blobs(cluster_amount):
 
     # Set new 2d array into data frame with correct column headers
     df = pd.DataFrame(flat_data, columns=['x', 'y', 'z', 'cluster'])
-    print(df)
     
     # Save data frame to csv file
     df.to_csv("output.csv", index=False)
@@ -69,7 +66,6 @@ def random_centroids(data, user_input):
 # Distance formula / cluster assignment 
 def get_labels(data, centroids):
     distances = centroids.apply(lambda x: np.sqrt(((data - x) ** 2).sum(axis=1)))
-    print(distances)
     return distances.idxmin(axis=1)
 
 # Create new centroids by group
@@ -77,21 +73,24 @@ def new_centroids(data, labels):
     return data.groupby(labels).mean().T
 
 # Plot clusters
-def plot_clusters_3d(data, labels, centroids, iteration): 
+def plot_clusters_3d(fig, ax, data, labels, centroids, iteration): 
     
-    # Create figure for plot and add 3D subplot
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
+    # Clear the axes to redraw the plot
+    ax.clear() 
     ax.set_title(f'Iteration {iteration}')
+    ax.set_xlabel('X', fontsize=12)
+    ax.set_ylabel('Y', fontsize=12)
+    ax.set_zlabel('Z', fontsize=12)
 
     # Plot data points
-    ax.scatter(
+    scatter = ax.scatter(
         data.iloc[:, 0], # x-cords
         data.iloc[:, 1], # y-cords
         data.iloc[:, 2], # z-cords
         c = labels,
         cmap = 'viridis',
-        s = 10
+        s = 8,
+        alpha = 0.5
     )
     # Plot centroids
     ax.scatter(
@@ -99,18 +98,17 @@ def plot_clusters_3d(data, labels, centroids, iteration):
         centroids.iloc[1, :], # y-cords
         centroids.iloc[2, :], # z-cords
         c = 'red',
-        cmap = 'viridis',
-        s = 50
+        s = 25,
+        alpha = 1
     )
-    # Set labels of axis
-    ax.set_xlabel('X')
-    ax.set_ylabel('Y')
-    ax.set_zlabel('Z')
 
-    # Clear the output from previous iteration and pause to allow update
-    clear_output(wait=True)
-    plt.draw()  
+    # Add grid for better visibility
+    ax.grid(True, linestyle='--', alpha=0.7)
+            
+    plt.draw()
     plt.pause(0.5)  
+
+
 
 # Main function to execute clustering
 def main():
@@ -122,18 +120,36 @@ def main():
     # Remove cluster label for K-Means algorithm
     data = data.drop('cluster', axis=1)
     
-    max_iterations = 100
+    # Set max iter, and centroid data frame
+    max_iterations = 1000
     centroids = random_centroids(data, user_input)
     old_centroids = pd.DataFrame()
     iteration = 1
 
-    while iteration < max_iterations and not centroids.equals(old_centroids):
-        old_centroids = centroids
+    # Create figure for plot and add 3D subplot
+    fig = plt.figure(figsize=(11, 8))
+    ax = fig.add_subplot(111, projection='3d')
 
+    while iteration < max_iterations:
+        # Save previous centroids
+        old_centroids = centroids
+        # Assign labels
         labels = get_labels(data, centroids)
+        # Calculate new centroids
         centroids = new_centroids(data, labels)
-        plot_clusters_3d(data, labels, centroids, iteration)
+        # Plot clusters
+        plot_clusters_3d(fig, ax, data, labels, centroids, iteration)
+         # Check if centroids have converged
+        if centroids.equals(old_centroids):
+            print(f"K-Means converged in {iteration} iterations.")
+            break  
+
         iteration += 1
+
+    if iteration == max_iterations:
+        print(f"K-Means reached the maximum iterations ({max_iterations}).") 
+
+    plt.show()
 
 # Run the main function
 if __name__ == '__main__':
