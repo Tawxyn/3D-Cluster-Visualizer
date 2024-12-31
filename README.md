@@ -25,7 +25,9 @@ When using the tool to test cluster amounts and data points per cluster, make su
 upper limits of clustering from centers of eachother the faster K-Means is able to determine the clusters. To get a decent feel of the project try 10 clusters, 100 data points, from 1 - 5. Additionally the current color map is 'hsv' from MatPlotLib, if you wish to change the color, you can set it within the plot_cluster_3d to a more appropriate colormap for yourself.
 
 # Example Plot:
-![Cluster Visualization](visuals/50Iteration.gif)
+<p align="center">
+  <img src="visuals/50Iteration.gif" alt="Cluster Visualization">
+</p>
 
 ## Credit:
 The project scope increased, and I was inspired to add a built-from-scratch K-Means clustering algorithm, thanks to the YouTube channel Dataquest. Please check them out for an in-depth and well-explained breakdown of how the K-Means algorithm works.
